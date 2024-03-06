@@ -1,0 +1,11 @@
+# Folders
+/build
+/coverage
+/.next/
+/node_modules
+/out/
+/storybook-static
+
+# Files
+package.json
+package-lock.json
