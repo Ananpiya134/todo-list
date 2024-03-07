@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { Task } from "@/types";
-import type { TaskState } from "../types";
+import type { TaskState } from "@/stores/types";
 
 const initialState: TaskState = {
   list: [],

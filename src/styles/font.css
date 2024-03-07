@@ -1,0 +1,52 @@
+.text-sm {
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.text-md {
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.text-lg {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.text-xl {
+  font-size: 28px;
+  line-height: 32px;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-black {
+  color: #000000;
+}
+
+.text-grey {
+  color: #a9a9a9;
+}
+
+.text-salmon {
+  color: #ebb9b8;
+}
+
+.text-black-200 {
+  color: #2e2e2e;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.line-through {
+  text-decoration: line-through;
+  text-decoration-color: a9a9a9;
+}
