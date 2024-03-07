@@ -6,6 +6,7 @@ export const getDefaultHtmlTag = (variant: Variant): string => {
     case "heading-2-black":
       return "h1";
     case "title":
+    case "title-salmon":
     case "description":
       return "p";
 
@@ -25,6 +26,9 @@ export const getClassName = (variant: Variant): string => {
       break;
     case "title":
       className = "text-md text-black-200 font-normal";
+      break;
+    case "title-salmon":
+      className = "text-md text-salmon font-normal";
       break;
     case "description":
       className = "text-sm text-black font-normal";

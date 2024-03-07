@@ -5,7 +5,9 @@ import type { Task } from "@/types";
 import type { TaskState } from "@/stores/types";
 
 const initialState: TaskState = {
+  loading: false,
   list: [],
+  total: 0,
 };
 
 const taskSlice = createSlice({

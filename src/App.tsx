@@ -1,31 +1,39 @@
-import { useEffect } from "react";
+import axios from "@services/axios";
+import { useState, useEffect } from "react";
 
-import { Checkbox } from "@/components/checkbox";
-import { TodoItem } from "./components/todo-item";
+// import { Checkbox } from "@/components/checkbox";
+// import { TodoItem } from "./components/todo-item";
 import { Typography } from "@/components/typography";
+import { Container } from "@/components/container";
+import { ProgressBar } from "@/components/progress-bar";
 
-import { getAllTask } from "./services/task";
+// import { getAllTask } from "./services/task";
 
 function App() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [data, setData] = useState<any>();
+
+  const fetch = async () => {
+    const response = await axios.get("/todos");
+
+    setData(response);
+  };
   useEffect(() => {
-    getAllTask();
+    fetch();
   }, []);
 
-  return (
-    <div className="bg-grey-900">
-      <Typography variant="heading-1-white">Heading-1-white</Typography>
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
-      <Typography variant="heading-2-black">Heading-2-black</Typography>
-      <Typography variant="title">Title</Typography>
-      <Typography className="text-grey line-through" variant="description">
-        Description
-      </Typography>
-      <div className="flex justify-center w-full">
-        <Checkbox />
-      </div>
-      <div className="flex justify-center w-full">
-        <TodoItem title="something" />
-      </div>
+  return (
+    <div className="bg-screen w-full h-full">
+      <Container>
+        <ProgressBar completed={3} total={10} />
+        <div className="flex justify-between items-center">
+          <Typography variant="heading-2-black">Tasks</Typography>
+        </div>
+      </Container>
     </div>
   );
 }

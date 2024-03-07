@@ -4,7 +4,8 @@ export type Variant =
   | "heading-1-white"
   | "heading-2-black"
   | "description"
-  | "title";
+  | "title"
+  | "title-salmon";
 
 export interface TypographyProps {
   asChild?: boolean;

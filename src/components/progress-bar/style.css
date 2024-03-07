@@ -1,0 +1,24 @@
+.progress-bar-container {
+  width: 518px;
+  height: 123px;
+  background-color: #e07c7c;
+  border-radius: 20px;
+  padding: 18px 19px 26px 19px;
+  margin-bottom: 32px;
+}
+
+.progress-success {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 7.34px;
+  border-radius: 999px;
+  background-color: #ffffff;
+}
+
+.progress-remaining {
+  border-radius: 999px;
+  background-color: #3b3b3b;
+  height: 7.34px;
+  position: relative;
+}

@@ -2,6 +2,10 @@
   width: 100%;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .w-518 {
   width: 518px;
 }
@@ -16,4 +20,16 @@
 
 .p-todo {
   padding: 12px 20px 12px 20px;
+}
+
+.mb-12 {
+  margin-bottom: 12px;
+}
+
+.mb-14 {
+  margin-bottom: 14px;
+}
+
+.mb-32 {
+  margin-bottom: 32px;
 }
