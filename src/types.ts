@@ -7,3 +7,8 @@ export type Task = {
 export type StyleType = {
   [key: string]: string;
 };
+
+export type Option = {
+  label: string;
+  value: string;
+};

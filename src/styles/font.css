@@ -3,6 +3,11 @@
   line-height: 16px;
 }
 
+.text-md-sm {
+  font-size: 14px;
+  line-height: 16px;
+}
+
 .text-md {
   font-size: 16px;
   line-height: 18px;
