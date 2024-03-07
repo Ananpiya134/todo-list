@@ -5,3 +5,7 @@
 .border-purple {
   border-color: #585292;
 }
+
+.rounded-full {
+  border-radius: 9999px;
+}

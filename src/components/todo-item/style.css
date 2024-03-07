@@ -1,0 +1,10 @@
+button.option {
+  border: none;
+  background-color: transparent;
+  padding: 9px 2px;
+}
+
+button.option:hover {
+  /* background-color: rgba(245, 245, 245, 0.2); */
+  background-color: rgba(255, 0, 0, 0.3);
+}

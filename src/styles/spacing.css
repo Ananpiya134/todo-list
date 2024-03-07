@@ -1,3 +1,19 @@
 .w-full {
   width: 100%;
 }
+
+.w-518 {
+  width: 518px;
+}
+
+.h-48 {
+  height: 48px;
+}
+
+.gap-4 {
+  gap: 16px;
+}
+
+.p-todo {
+  padding: 12px 20px 12px 20px;
+}
