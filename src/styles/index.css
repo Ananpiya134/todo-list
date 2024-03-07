@@ -1,7 +1,9 @@
-@import "position.css";
-@import "font.css";
 @import "background.css";
 @import "border.css";
+@import "checkbox.css";
+@import "font.css";
+@import "position.css";
+@import "spacing.css";
 
 * {
   margin: 0;
