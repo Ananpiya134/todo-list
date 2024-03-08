@@ -33,16 +33,28 @@ const taskSlice = createSlice({
     updateStatus: (state, action: PayloadAction<Task>) => {
       const index = state.list.findIndex((ele) => ele.id === action.payload.id);
       const newList = [...state.list];
-      if (index !== -1) newList[index] = { ...action.payload };
+      if (index !== -1) {
+        newList[index] = { ...action.payload };
+      }
+
       return {
         ...state,
         list: [...newList],
-        completedAmount: newList.filter((ele) => ele.completed).length,
+        completedAmount: action.payload.completed
+          ? state.completedAmount + 1
+          : state.completedAmount - 1,
+      };
+    },
+    setTaskListOnFilter: (state, action: PayloadAction<Task[]>) => {
+      return {
+        ...state,
+        list: [...action.payload],
       };
     },
   },
 });
 
-export const { setTaskList, addTask, updateStatus } = taskSlice.actions;
+export const { setTaskList, addTask, updateStatus, setTaskListOnFilter } =
+  taskSlice.actions;
 
 export default taskSlice.reducer;

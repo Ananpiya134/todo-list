@@ -10,7 +10,11 @@ import { Typography } from "@/components/typography";
 import { filterOptions } from "@/configs/constants";
 
 import { useAppDispatch, useAppSelector } from "./stores";
-import { setTaskList, updateStatus } from "@/stores/slices/taskSlice";
+import {
+  setTaskList,
+  setTaskListOnFilter,
+  updateStatus,
+} from "@/stores/slices/taskSlice";
 
 import type { Option, Task } from "@/types";
 import type { OptionValue } from "@components/select";
@@ -49,24 +53,29 @@ function App() {
     }
   };
 
-  const fetch = async (queryParam: string) => {
-    const response = await axios.get(`/todos?${queryParam}`);
+  const fetch = async () => {
+    const response = await axios.get("/todos");
     if (response.status === 200) {
       dispatch(setTaskList(response.data));
     }
   };
 
+  const fetchOnFilter = async (queryParams: string) => {
+    const response = await axios.get(`/todos?${queryParams}`);
+    if (response.status === 200) dispatch(setTaskListOnFilter(response.data));
+  };
+
   useEffect(() => {
-    fetch("");
+    fetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (selectedFilter.value === filterOptions.ALL.value) fetch("");
+    if (selectedFilter.value === filterOptions.ALL.value) fetchOnFilter("");
     if (selectedFilter.value === filterOptions.DONE.value)
-      fetch("completed=true");
+      fetchOnFilter("completed=true");
     if (selectedFilter.value === filterOptions.UNDONE.value)
-      fetch("completed=false");
+      fetchOnFilter("completed=false");
 
     setOpenDropdown(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
