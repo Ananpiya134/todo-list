@@ -16,8 +16,6 @@ import type { Option, Task } from "@/types";
 import type { OptionValue } from "@components/select";
 
 function App() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<Option>(
     filterOptions.ALL
@@ -47,20 +45,27 @@ function App() {
     }
   };
 
-  const fetch = async () => {
-    const response = await axios.get("/todos");
+  const fetch = async (queryParam: string) => {
+    const response = await axios.get(`/todos?${queryParam}`);
     if (response.status === 200) {
       dispatch(setTaskList(response.data));
     }
   };
 
   useEffect(() => {
-    fetch();
+    fetch("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    if (selectedFilter.value === filterOptions.ALL.value) fetch("");
+    if (selectedFilter.value === filterOptions.DONE.value)
+      fetch("completed=true");
+    if (selectedFilter.value === filterOptions.UNDONE.value)
+      fetch("completed=false");
+
     setOpenDropdown(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFilter]);
 
   return (
