@@ -9,3 +9,7 @@
 .rounded-full {
   border-radius: 9999px;
 }
+
+.rounded-20 {
+  border-radius: 20px;
+}

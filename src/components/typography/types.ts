@@ -5,6 +5,7 @@ export type Variant =
   | "heading-2-black"
   | "description"
   | "title"
+  | "title-linethrough"
   | "title-salmon"
   | "option";
 

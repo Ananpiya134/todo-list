@@ -9,7 +9,11 @@ import type { TodoItemProps } from "./types";
 import "./style.css";
 
 const TodoItem = ({
+  id,
+  completed,
   title,
+  toggleCompleted,
+
   className = "",
   ...props
 }: TodoItemProps): JSX.Element => {
@@ -17,13 +21,19 @@ const TodoItem = ({
     <div
       {...props}
       className={cnConcat(
-        "w-518 h-48 bg-white flex items-center gap-4 rounded-full p-todo",
+        "w-518 h-48 bg-white flex items-center gap-16 rounded-full p-todo",
         className
       )}
     >
-      <Checkbox />
+      <Checkbox
+        checked={completed}
+        value={id}
+        onChange={(event) => toggleCompleted(event.target.value)}
+      />
       <span className="w-full flex justify-between items-center">
-        <Typography variant="title">{title}</Typography>
+        <Typography variant={completed ? "title-linethrough" : "title"}>
+          {title}
+        </Typography>
         <div>
           <button className="option">
             <img src={IconDots} alt="dots-icons" />

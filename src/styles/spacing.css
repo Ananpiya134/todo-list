@@ -6,6 +6,10 @@
   height: 100%;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .w-518 {
   width: 518px;
 }
@@ -14,12 +18,16 @@
   height: 48px;
 }
 
-.gap-4 {
+.gap-16 {
   gap: 16px;
 }
 
 .p-todo {
   padding: 12px 20px 12px 20px;
+}
+
+.pt-42 {
+  padding-top: 42px;
 }
 
 .mb-12 {
@@ -28,6 +36,10 @@
 
 .mb-14 {
   margin-bottom: 14px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
 }
 
 .mb-32 {
