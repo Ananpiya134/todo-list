@@ -21,7 +21,11 @@ function App() {
     filterOptions.ALL
   );
 
-  const todoList = useAppSelector((state) => state.task.list);
+  const {
+    completedAmount,
+    list: todoList,
+    totalAmount,
+  } = useAppSelector((state) => state.task);
   const dispatch = useAppDispatch();
 
   const onClickDropdown = () => setOpenDropdown((prev) => !prev);
@@ -71,7 +75,7 @@ function App() {
   return (
     <div className="bg-screen w-full h-screen pt-42">
       <Container className="rounded-20">
-        <ProgressBar completed={3} total={10} />
+        <ProgressBar completed={completedAmount} total={totalAmount} />
         <div className="w-full flex justify-between items-center mb-16">
           <Typography variant="heading-2-black">Tasks</Typography>
           <Select

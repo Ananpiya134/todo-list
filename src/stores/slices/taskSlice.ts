@@ -7,8 +7,9 @@ import type { TaskState } from "@/stores/types";
 const initialState: TaskState = {
   loading: false,
   list: [],
-  completed: 0,
-  total: 0,
+  completedAmount: 0,
+
+  totalAmount: 0,
 };
 
 const taskSlice = createSlice({
@@ -19,8 +20,8 @@ const taskSlice = createSlice({
       return {
         ...state,
         list: action.payload,
-        completed: action.payload.filter((ele) => ele.completed).length,
-        total: action.payload.length,
+        completedAmount: action.payload.filter((ele) => ele.completed).length,
+        totalAmount: action.payload.length,
       };
     },
     addTask: (state, action: PayloadAction<Task[]>) => {
@@ -36,6 +37,7 @@ const taskSlice = createSlice({
       return {
         ...state,
         list: [...newList],
+        completedAmount: newList.filter((ele) => ele.completed).length,
       };
     },
   },

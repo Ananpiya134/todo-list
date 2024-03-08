@@ -4,8 +4,8 @@ import store from "./store";
 export interface TaskState {
   loading: boolean;
   list: Task[];
-  completed: number;
-  total: number;
+  completedAmount: number;
+  totalAmount: number;
 }
 
 export type RootState = ReturnType<typeof store.getState>;
