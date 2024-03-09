@@ -8,7 +8,6 @@ const initialState: TaskState = {
   loading: false,
   list: [],
   completedAmount: 0,
-
   totalAmount: 0,
 };
 
@@ -24,10 +23,12 @@ const taskSlice = createSlice({
         totalAmount: action.payload.length,
       };
     },
-    addTask: (state, action: PayloadAction<Task[]>) => {
+    addTask: (state, action: PayloadAction<Task>) => {
+      const newList = [...state.list, action.payload];
       return {
         ...state,
-        list: action.payload,
+        list: newList,
+        totalAmount: state.totalAmount + 1,
       };
     },
     updateStatus: (state, action: PayloadAction<Task>) => {

@@ -1,25 +1,29 @@
 import axios from "@services/axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEventHandler } from "react";
+import { toast } from "react-toastify";
 
-import { TodoItem } from "./components/todo-item";
 import { Container } from "@/components/container";
 import { ProgressBar } from "@/components/progress-bar";
 import { Select } from "@components/select";
+import { TodoItem } from "@/components/todo-item";
+import { TodoNew } from "@components/todo-new";
 import { Typography } from "@/components/typography";
 
 import { filterOptions } from "@/configs/constants";
 
 import { useAppDispatch, useAppSelector } from "./stores";
 import {
+  addTask,
+  updateStatus,
   setTaskList,
   setTaskListOnFilter,
-  updateStatus,
 } from "@/stores/slices/taskSlice";
 
 import type { Option, Task } from "@/types";
 import type { OptionValue } from "@components/select";
 
 function App() {
+  const [newTodoValue, setNewTodoValue] = useState<string>("");
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<Option>(
     filterOptions.ALL
@@ -33,9 +37,37 @@ function App() {
   const dispatch = useAppDispatch();
 
   const onClickDropdown = () => setOpenDropdown((prev) => !prev);
+  const handleNewTodoValueChange: ChangeEventHandler<HTMLInputElement> = (e) =>
+    setNewTodoValue(e.target.value);
 
   const handleSelectChange = (value: OptionValue) => {
     setSelectedFilter(filterOptions[value]);
+  };
+
+  const handleAddTodo: React.KeyboardEventHandler<HTMLInputElement> = async (
+    event
+  ) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const eventTarget = event.target as HTMLInputElement;
+      const title = eventTarget.value;
+      if (title === "") {
+        toast("Todo title is required.", {
+          type: "error",
+        });
+      } else {
+        const response = await axios.post("/todos", {
+          completed: false,
+          title,
+        });
+
+        if (response.status === 201) {
+          dispatch(addTask({ ...response.data }));
+          console.log("first");
+          setNewTodoValue("");
+        }
+      }
+    }
   };
 
   const toggleCompleted = async (id: string) => {
@@ -99,14 +131,20 @@ function App() {
           {todoList.map(({ id, title, completed }) => {
             return (
               <TodoItem
+                completed={completed}
                 id={id}
                 key={id}
                 title={title}
-                completed={completed}
                 toggleCompleted={toggleCompleted}
               />
             );
           })}
+          <TodoNew
+            placeholder="Add your todo..."
+            value={newTodoValue}
+            onChange={handleNewTodoValueChange}
+            onKeyDown={handleAddTodo}
+          />
         </div>
       </Container>
     </div>

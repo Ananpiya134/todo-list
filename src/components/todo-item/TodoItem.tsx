@@ -21,7 +21,7 @@ const TodoItem = ({
     <div
       {...props}
       className={cnConcat(
-        "w-518 h-48 bg-white flex items-center gap-16 rounded-full p-todo",
+        "w-full h-48 bg-white flex items-center gap-16 rounded-full p-todo",
         className
       )}
     >
