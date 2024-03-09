@@ -18,12 +18,16 @@
   height: 48px;
 }
 
+.gap-4 {
+  gap: 4px;
+}
+
 .gap-16 {
   gap: 16px;
 }
 
 .p-todo {
-  padding: 12px 20px 12px 20px;
+  padding: 6px 20px 6px 20px;
 }
 
 .pt-42 {

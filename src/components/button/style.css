@@ -1,0 +1,13 @@
+.btn {
+  border-radius: 999px;
+  padding: 10px 17px 10px 17px;
+  border: none;
+}
+
+.btn-save {
+  background-color: #585292;
+}
+
+.btn-cancel {
+  background-color: #e07c7c;
+}

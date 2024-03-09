@@ -1,6 +1,7 @@
 import axios from "@services/axios";
 import { useState, useEffect, ChangeEventHandler } from "react";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 
 import { Container } from "@/components/container";
 import { ProgressBar } from "@/components/progress-bar";
@@ -17,12 +18,17 @@ import {
   updateStatus,
   setTaskList,
   setTaskListOnFilter,
+  editTaskTitle,
+  deleteTask,
 } from "@/stores/slices/taskSlice";
 
 import type { Option, Task } from "@/types";
 import type { OptionValue } from "@components/select";
+import type { DropdownProps } from "@components/dropdown";
 
 function App() {
+  const [currentEditId, setCurrentEditId] = useState<string | null>(null);
+
   const [newTodoValue, setNewTodoValue] = useState<string>("");
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<Option>(
@@ -37,8 +43,25 @@ function App() {
   const dispatch = useAppDispatch();
 
   const onClickDropdown = () => setOpenDropdown((prev) => !prev);
+  const onClickCancelEdit = () => setCurrentEditId(null);
   const handleNewTodoValueChange: ChangeEventHandler<HTMLInputElement> = (e) =>
     setNewTodoValue(e.target.value);
+
+  const onClickSaveEditTodo = async (title: string) => {
+    const selectedIndex = todoList.findIndex((ele) => ele.id === currentEditId);
+    const selectedObj = todoList[selectedIndex];
+    selectedObj;
+    const response = await axios.put(`/todos/${currentEditId}`, {
+      ...selectedObj,
+      title,
+    });
+
+    if (response.status === 200) {
+      dispatch(editTaskTitle({ ...selectedObj, title }));
+      toast("Update task successfully", { type: "success" });
+      setCurrentEditId(null);
+    }
+  };
 
   const handleSelectChange = (value: OptionValue) => {
     setSelectedFilter(filterOptions[value]);
@@ -56,15 +79,17 @@ function App() {
           type: "error",
         });
       } else {
-        const response = await axios.post("/todos", {
+        const payload: Task = {
+          id: uuidv4(),
           completed: false,
           title,
-        });
+        };
+        const response = await axios.post("/todos", payload);
 
         if (response.status === 201) {
-          dispatch(addTask({ ...response.data }));
-          console.log("first");
+          dispatch(addTask(payload));
           setNewTodoValue("");
+          toast("Create task successfully.", { type: "success" });
         }
       }
     }
@@ -72,6 +97,7 @@ function App() {
 
   const toggleCompleted = async (id: string) => {
     const task = todoList.find((ele) => ele.id === id);
+
     if (task) {
       const newTask: Task = {
         ...task,
@@ -129,13 +155,36 @@ function App() {
         </div>
         <div className="flex flex-column gap-16">
           {todoList.map(({ id, title, completed }) => {
+            const isEdit = currentEditId === id;
+            const handleClickEdit = () => setCurrentEditId(id);
+            const handleDeleteTodo = async () => {
+              const response = await axios.delete(`/todos/${id}`);
+              if (response.status === 200) {
+                dispatch(deleteTask({ completed, id }));
+                toast.success("Delete task successfully.", { type: "success" });
+              }
+            };
+
+            const dropdownOptions: DropdownProps["options"] = [
+              {
+                label: "Edit",
+                handleFn: handleClickEdit,
+              },
+              { label: "Delete", handleFn: handleDeleteTodo },
+            ];
             return (
               <TodoItem
                 completed={completed}
+                className={isEdit ? "justify-between" : ""}
+                dropdownOptions={dropdownOptions}
                 id={id}
+                isEdit={isEdit}
                 key={id}
+                onClickCancelEdit={onClickCancelEdit}
+                onClickSaveEdit={onClickSaveEditTodo}
                 title={title}
                 toggleCompleted={toggleCompleted}
+                value={title}
               />
             );
           })}

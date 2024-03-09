@@ -15,6 +15,45 @@ const taskSlice = createSlice({
   name: "task",
   initialState,
   reducers: {
+    addTask: (state, action: PayloadAction<Task>) => {
+      const newList = [...state.list, action.payload];
+      return {
+        ...state,
+        list: newList,
+        totalAmount: state.totalAmount + 1,
+      };
+    },
+    deleteTask: (
+      state,
+      action: PayloadAction<Pick<Task, "id" | "completed">>
+    ) => {
+      const newList = [...state.list].filter(
+        (ele) => ele.id !== action.payload.id
+      );
+      const newCompletedAmount = action.payload.completed
+        ? state.completedAmount - 1
+        : state.completedAmount;
+
+      console.log(newCompletedAmount);
+      return {
+        ...state,
+        list: newList,
+        completedAmount: newCompletedAmount,
+        totalAmount: state.totalAmount - 1,
+      };
+    },
+    editTaskTitle: (state, action: PayloadAction<Task>) => {
+      const index = state.list.findIndex((ele) => ele.id === action.payload.id);
+
+      if (index !== -1) {
+        const newList = [...state.list];
+        newList[index] = { ...action.payload };
+        return {
+          ...state,
+          list: newList,
+        };
+      }
+    },
     setTaskList: (state, action: PayloadAction<Task[]>) => {
       return {
         ...state,
@@ -23,12 +62,10 @@ const taskSlice = createSlice({
         totalAmount: action.payload.length,
       };
     },
-    addTask: (state, action: PayloadAction<Task>) => {
-      const newList = [...state.list, action.payload];
+    setTaskListOnFilter: (state, action: PayloadAction<Task[]>) => {
       return {
         ...state,
-        list: newList,
-        totalAmount: state.totalAmount + 1,
+        list: [...action.payload],
       };
     },
     updateStatus: (state, action: PayloadAction<Task>) => {
@@ -46,16 +83,16 @@ const taskSlice = createSlice({
           : state.completedAmount - 1,
       };
     },
-    setTaskListOnFilter: (state, action: PayloadAction<Task[]>) => {
-      return {
-        ...state,
-        list: [...action.payload],
-      };
-    },
   },
 });
 
-export const { setTaskList, addTask, updateStatus, setTaskListOnFilter } =
-  taskSlice.actions;
+export const {
+  addTask,
+  editTaskTitle,
+  deleteTask,
+  setTaskList,
+  setTaskListOnFilter,
+  updateStatus,
+} = taskSlice.actions;
 
 export default taskSlice.reducer;

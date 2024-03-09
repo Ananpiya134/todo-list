@@ -1,10 +1,11 @@
 import IconArrowDown from "@assets/images/icon-arrow-down.svg";
 
+import { Typography } from "@components/typography";
+
 import { cnConcat } from "@/utils/cn";
 
 import type { OptionValue, SelectProps } from "./types";
 import "./style.css";
-import { Typography } from "../typography";
 
 const Select = ({
   optionList,
@@ -16,21 +17,23 @@ const Select = ({
   ...props
 }: SelectProps): JSX.Element => {
   return (
-    <div {...props} className={cnConcat("dropdown-container", className)}>
-      <div className="dropdown-header">
+    <div {...props} className={cnConcat("select-container", className)}>
+      <div className="select-header">
         <Typography variant="description">{selected.label}</Typography>
         <img src={IconArrowDown} alt="icon-arrow-doen" />
       </div>
       <div
-        className="dropdown-list-container"
+        className="select-list-container"
         style={{ display: open ? "block" : "none" }}
       >
-        <ul className="dropdown-list">
+        <ul className="select-list">
           {optionList.map(({ label, value }) => {
             const isSelected = selected.value === value;
             return (
               <li
-                className={isSelected ? "list-item-selected" : "list-item"}
+                className={
+                  isSelected ? "select-list-item-selected" : "select-list-item"
+                }
                 key={value}
                 value={value}
                 onClick={() => handleChange(value as OptionValue)}
